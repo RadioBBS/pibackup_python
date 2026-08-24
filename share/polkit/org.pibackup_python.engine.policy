@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
+<!--
+pibackup – optionale Polkit-Regel fuer pkexec.
+
+Projekt:     pibackup_python
+Modul:       share/polkit/org.pibackup_python.engine.policy
+Version:     1.0.0
+Stand:       2026-08-24
+Abhaengig:   Debian-Pakete e2fsprogs, util-linux, zstd, mount; Python-Standardbibliothek (Python >= 3.10)
+Bezug:       requirements.txt (leer – Stdlib only; Linux-Werkzeuge siehe Datei)
+Lizenz:      MIT
+Upstream:    https://github.com/RaspberryFpc/pibackup (RaspberryFpc)
+Erstellt mit: Cursor Grok 4.6
+Autor:       (FFHB) / RadioBBS
+
+Installation (optional, als root):
+  cp share/polkit/org.pibackup_python.engine.policy /usr/share/polkit-1/actions/
+-->
+<policyconfig>
+  <vendor>pibackup</vendor>
+  <vendor_url>https://github.com/RadioBBS/pibackup_python</vendor_url>
+  <icon_name>drive-harddisk</icon_name>
+  <action id="org.pibackup_python.engine.run">
+    <description>pibackup Engine starten</description>
+    <description xml:lang="de">pibackup-Engine (Backup, Restore, Clone)</description>
+    <message>pibackup benoetigt erhoehte Rechte fuer die Schreibaktion.</message>
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+  </action>
+</policyconfig>

@@ -1,0 +1,35 @@
+# pibackup_python – Citation File Format (maschinenlesbare Zitation).
+#
+# Projekt:     pibackup_python
+# Modul:       CITATION.cff
+# Version:     1.0.0
+# Stand:       2026-08-24
+# Abhaengig:   Debian-Pakete e2fsprogs, util-linux, zstd, mount; Python-Standardbibliothek (Python >= 3.10)
+# Bezug:       requirements.txt (leer – Stdlib only; Linux-Werkzeuge siehe Datei)
+# Lizenz:      MIT
+# Upstream:    https://github.com/RaspberryFpc/pibackup (RaspberryFpc)
+# Erstellt mit: Cursor Grok 4.6
+# Autor:       (FFHB) / RadioBBS
+#
+# Historie
+# --------
+# Version 1.0.0 – 2026-08-24 – Datei angelegt (oeffentliches Repo).
+
+cff-version: 1.2.0
+message: "Bitte mit diesen Metadaten zitieren."
+title: pibackup_python
+abstract: Python-CLI und Browser-GUI fuer Raspberry-Pi-Backup, Restore und Klonen (Startpartition plus Root, Verkleinern, zstd).
+version: "1.0.0"
+date-released: "2026-08-24"
+license: MIT
+authors:
+  - name: "(FFHB) / RadioBBS"
+repository-code: https://github.com/RadioBBS/pibackup_python
+url: https://github.com/RadioBBS/pibackup_python
+type: software
+keywords:
+  - raspberry-pi
+  - backup
+  - restore
+  - clone
+  - zstd

@@ -1,0 +1,34 @@
+# pibackup_python – Git-Ignore fuer lokale und erzeugte Dateien.
+#
+# Projekt:     pibackup_python
+# Modul:       .gitignore
+# Version:     1.0.0
+# Stand:       2026-08-24
+# Abhaengig:   Debian-Pakete e2fsprogs, util-linux, zstd, mount; Python-Standardbibliothek (Python >= 3.10)
+# Bezug:       requirements.txt (leer – Stdlib only; Linux-Werkzeuge siehe Datei)
+# Lizenz:      MIT
+# Upstream:    https://github.com/RaspberryFpc/pibackup (RaspberryFpc)
+# Erstellt mit: Cursor Grok 4.6
+# Autor:       (FFHB) / RadioBBS
+#
+# Beschreibung
+# ------------
+# Schliesst lokale Arbeitsordner, virtuelle Umgebungen, Logs und Images aus.
+#
+# Historie
+# --------
+# Version 1.0.0 – 2026-08-24 – Datei angelegt.
+
+__local__/
+__scratch__/
+__testdata__/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.log
+*.img
+*.img.zst
+.env
+.DS_Store
+Thumbs.db

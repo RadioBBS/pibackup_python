@@ -1,0 +1,16 @@
+# pibackup_python – DHCP- und Netz-Cache im Image entfernen.
+#
+# Projekt:     pibackup_python
+# Modul:       share/exclude/dhcp-cleanup.exclude
+# Version:     1.0.0
+# Stand:       2026-08-24
+# Abhaengig:   Debian-Pakete e2fsprogs, util-linux, zstd, mount; Python-Standardbibliothek (Python >= 3.10)
+# Bezug:       requirements.txt (leer – Stdlib only; Linux-Werkzeuge siehe Datei)
+# Lizenz:      MIT
+# Upstream:    https://github.com/RaspberryFpc/pibackup (RaspberryFpc)
+# Erstellt mit: Cursor Grok 4.6
+# Autor:       (FFHB) / RadioBBS
+
+fileintree = /var/lib/dhcp/*
+fileintree = /var/lib/dhcpcd5/*
+file = /etc/resolv.conf

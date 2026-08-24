@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<!--
+pibackup_python – Browser-Oberflaeche (lokal, 127.0.0.1).
+
+Projekt:     pibackup_python
+Modul:       share/web/index.html
+Version:     1.0.0
+Stand:       2026-08-24
+Abhaengig:   Debian-Pakete e2fsprogs, util-linux, zstd, mount; Python-Standardbibliothek (Python >= 3.10)
+Bezug:       requirements.txt (leer – Stdlib only; Linux-Werkzeuge siehe Datei)
+Lizenz:      MIT
+Upstream:    https://github.com/RaspberryFpc/pibackup (RaspberryFpc)
+Erstellt mit: Cursor Grok 4.6
+Autor:       (FFHB) / RadioBBS
+-->
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>pibackup {{VERSION}}</title>
+  <style>
+    :root {
+      --bg: #14181d;
+      --card: #1e252c;
+      --line: #323b45;
+      --text: #e8eaed;
+      --muted: #9aa3ad;
+      --accent: #c51a4a;
+      --ok: #6cc04a;
+      --warn: #e0a106;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: radial-gradient(1200px 400px at 10% -10%, #3a1520 0%, var(--bg) 55%);
+      color: var(--text);
+    }
+    header {
+      padding: 1.2rem 1.6rem;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    header strong { color: var(--accent); letter-spacing: 0.04em; }
+    main { max-width: 960px; margin: 1.4rem auto; padding: 0 1rem 2rem; }
+    .modes { display: flex; gap: 0.6rem; margin-bottom: 1rem; }
+    .modes button {
+      flex: 1;
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0.7rem;
+      cursor: pointer;
+    }
+    .modes button.active { border-color: var(--accent); background: #2a151c; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.1rem 1.2rem;
+      margin-bottom: 1rem;
+    }
+    label { display: block; font-size: 0.85rem; color: var(--muted); margin: 0.7rem 0 0.25rem; }
+    input, select {
+      width: 100%;
+      background: #12161b;
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0.55rem 0.65rem;
+    }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .checks { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.8rem; }
+    .checks label { display: flex; gap: 0.4rem; align-items: center; color: var(--text); }
+    .checks input { width: auto; }
+    .actions { display: flex; gap: 0.6rem; margin-top: 1rem; }
+    button.primary, button.ghost, button.danger {
+      border-radius: 8px;
+      padding: 0.65rem 1rem;
+      cursor: pointer;
+      border: 1px solid var(--line);
+    }
+    button.primary { background: var(--accent); color: white; border-color: transparent; }
+    button.ghost { background: transparent; color: var(--text); }
+    button.danger { background: #5a1d1d; color: #ffd0d0; }
+    .note { color: var(--warn); font-size: 0.9rem; min-height: 1.2rem; }
+    .bar { height: 10px; background: #12161b; border-radius: 99px; overflow: hidden; }
+    .bar span { display: block; height: 100%; width: 0; background: var(--ok); }
+    pre {
+      background: #0d1114;
+      border-radius: 8px;
+      padding: 0.8rem;
+      min-height: 10rem;
+      max-height: 18rem;
+      overflow: auto;
+      font-size: 0.8rem;
+      white-space: pre-wrap;
+    }
+    @media (max-width: 700px) { .row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div><strong>pibackup</strong> Browser-GUI</div>
+    <div id="meta">Version {{VERSION}} · Stand {{STAND}}</div>
+  </header>
+  <main>
+    <div class="modes">
+      <button class="active" data-mode="backup" type="button">Backup</button>
+      <button data-mode="restore" type="button">Restore</button>
+      <button data-mode="clone" type="button">Clone</button>
+    </div>
+    <section class="card">
+      <p id="note" class="note"></p>
+      <div class="row">
+        <div>
+          <label for="source">Quelle (Startdisk, nicht die Partition)</label>
+          <select id="source"></select>
+        </div>
+        <div>
+          <label for="startpart">Startpartition (Anzeige)</label>
+          <input id="startpart" readonly />
+        </div>
+      </div>
+      <div id="backup-fields">
+        <label for="dest">Ziel (Vorschlag: externe Disk, Hostname + Datum)</label>
+        <input id="dest" />
+        <div class="checks">
+          <label><input id="shrink" type="checkbox" checked /> Verkleinern</label>
+          <label><input id="compress" type="checkbox" checked /> Packen (zstd)</label>
+          <label><input id="remove-ssh" type="checkbox" /> SSH-Reste entfernen</label>
+          <label><input id="remove-dhcp" type="checkbox" /> DHCP-Reste entfernen</label>
+        </div>
+      </div>
+      <div id="restore-fields" hidden>
+        <label for="image">Image (.img / .img.zst)</label>
+        <input id="image" />
+        <label for="restore-dest">Zielgeraet</label>
+        <select id="restore-dest"></select>
+        <div class="checks">
+          <label><input id="enable-ssh" type="checkbox" /> SSH auf Startpartition aktivieren</label>
+        </div>
+      </div>
+      <div id="clone-fields" hidden>
+        <label for="clone-dest">Zielgeraet (wird ueberschrieben)</label>
+        <select id="clone-dest"></select>
+      </div>
+      <div class="actions">
+        <button class="ghost" id="preview" type="button">Vorschau</button>
+        <button class="primary" id="start" type="button">Schreibaktion starten (pkexec/sudo)</button>
+        <button class="danger" id="cancel" type="button">Abbrechen</button>
+      </div>
+    </section>
+    <section class="card">
+      <label>Fortschritt</label>
+      <div class="bar"><span id="bar"></span></div>
+      <pre id="log">Bereit.</pre>
+    </section>
+  </main>
+  <script>
+    const TOKEN = "{{TOKEN}}";
+    let mode = "backup";
+    let defaults = {};
+
+    function $(id) { return document.getElementById(id); }
+
+    function fillSelect(sel, devices, selected) {
+      sel.innerHTML = "";
+      const empty = document.createElement("option");
+      empty.value = "";
+      empty.textContent = devices.length ? "(bitte waehlen)" : "(keine Linux-Disks)";
+      sel.appendChild(empty);
+      devices.forEach((d) => {
+        const opt = document.createElement("option");
+        opt.value = d.path;
+        const mark = d.is_system ? "Startdisk" : (d.tran || "disk");
+        opt.textContent = `${d.path} · ${mark} · ${(d.size / 1e9).toFixed(1)} GB ${d.model || ""}`;
+        if (d.path === selected) opt.selected = true;
+        sel.appendChild(opt);
+      });
+    }
+
+    function showMode() {
+      $("backup-fields").hidden = mode !== "backup";
+      $("restore-fields").hidden = mode !== "restore";
+      $("clone-fields").hidden = mode !== "clone";
+      document.querySelectorAll(".modes button").forEach((b) => {
+        b.classList.toggle("active", b.dataset.mode === mode);
+      });
+    }
+
+    function payload() {
+      const body = { token: TOKEN, mode };
+      if (mode === "backup") {
+        body.source = $("source").value;
+        body.dest = $("dest").value;
+        body.shrink = $("shrink").checked;
+        body.compress = $("compress").checked;
+        body.remove_ssh = $("remove-ssh").checked;
+        body.remove_dhcp = $("remove-dhcp").checked;
+      } else if (mode === "restore") {
+        body.image = $("image").value;
+        body.dest = $("restore-dest").value;
+        body.enable_ssh = $("enable-ssh").checked;
+      } else {
+        body.source = $("source").value;
+        body.dest = $("clone-dest").value;
+      }
+      return body;
+    }
+
+    async function loadDefaults() {
+      const res = await fetch("/api/defaults");
+      const data = await res.json();
+      defaults = data.defaults || {};
+      $("note").textContent = defaults.note || (data.linux ? "" : "Keine Blockgeraete (nicht Linux) – Vorschau der Defaults.");
+      const devices = data.devices || [];
+      fillSelect($("source"), devices, defaults.source_disk);
+      fillSelect($("restore-dest"), devices.filter((d) => !d.is_system), "");
+      fillSelect($("clone-dest"), devices.filter((d) => !d.is_system), "");
+      $("startpart").value = defaults.start_partition || "";
+      const dest = defaults.suggested_path || ((defaults.target_dir || "") + "/" + (defaults.backup_name || ""));
+      $("dest").value = dest.replace(/\\/g, "/");
+      $("shrink").checked = defaults.shrink !== false;
+      $("compress").checked = defaults.compress !== false;
+    }
+
+    async function post(url, extra) {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Object.assign(payload(), extra || {}))
+      });
+      return res.json();
+    }
+
+    function appendLog(lines) {
+      if (!lines || !lines.length) return;
+      $("log").textContent = lines.join("\n");
+      $("log").scrollTop = $("log").scrollHeight;
+    }
+
+    async function poll() {
+      const res = await fetch("/api/status");
+      const data = await res.json();
+      $("bar").style.width = (data.percent || 0) + "%";
+      appendLog(data.log);
+      if (data.running) setTimeout(poll, 500);
+      else if (data.ok === false) $("note").textContent = data.message || "Fehler";
+    }
+
+    document.querySelectorAll(".modes button").forEach((btn) => {
+      btn.addEventListener("click", () => { mode = btn.dataset.mode; showMode(); });
+    });
+    $("source").addEventListener("change", () => {
+      const val = $("source").value;
+      if (!val) return;
+      $("startpart").value = /[0-9]$/.test(val) ? val + "p1" : val + "1";
+    });
+    $("preview").addEventListener("click", async () => {
+      const data = await post("/api/preview");
+      $("log").textContent = (data.steps || [data.error || ""]).concat(data.warnings || []).join("\n");
+    });
+    $("start").addEventListener("click", async () => {
+      if (!confirm("Schreibaktion als root per pkexec/sudo starten?")) return;
+      $("log").textContent = "Starte Engine ...";
+      const data = await post("/api/start");
+      if (!data.ok) { $("note").textContent = data.error || "Start fehlgeschlagen"; return; }
+      poll();
+    });
+    $("cancel").addEventListener("click", async () => { await post("/api/cancel"); });
+    showMode();
+    loadDefaults().catch((err) => { $("note").textContent = String(err); });
+  </script>
+</body>
+</html>

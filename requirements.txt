@@ -1,0 +1,50 @@
+# pibackup_python – Python-Abhaengigkeiten.
+#
+# Projekt:     pibackup_python
+# Modul:       requirements.txt
+# Version:     1.0.0
+# Stand:       2026-08-24
+# Abhaengig:   Debian-Pakete e2fsprogs, util-linux, zstd, mount; Python-Standardbibliothek (Python >= 3.10)
+# Bezug:       requirements.txt (leer – Stdlib only; Linux-Werkzeuge siehe Datei)
+# Lizenz:      MIT
+# Upstream:    https://github.com/RaspberryFpc/pibackup (RaspberryFpc)
+# Erstellt mit: Cursor Grok 4.6
+# Autor:       (FFHB) / RadioBBS
+#
+# Beschreibung
+# ------------
+# Keine PyPI-Pakete. pip-Install ist leer, weil Live-Backup, Shrink
+# und Packen keine Python-Plugins brauchen, sondern Kernel- und
+# Dateisystem-Werkzeuge:
+#
+#   Live-Backup  – Rohlesen des Blockgeraets (os.read/os.write, Stdlib).
+#                  Ein PyPI-Paket ersetzt das nicht; Snapshots waeren
+#                  LVM/btrfs, nicht pip.
+#   Shrink       – ext4 verkleinern kann nur e2fsprogs (resize2fs,
+#                  e2fsck). Dafuer gibt es kein sicheres Python-Modul.
+#   Packen       – zstd als Debian-Paket. Das PyPI-Modul zstandard
+#                  waere nur ein zweiter Kompressor mit C-Extension
+#                  und wuerde resize2fs trotzdem nicht ersetzen.
+#   Geraete      – lsblk (util-linux), nicht pyudev.
+#
+# Laufzeit auf dem Raspberry Pi (apt, nicht pip):
+#
+#   sudo apt install python3 e2fsprogs util-linux mount zstd policykit-1
+#
+# Historie
+# --------
+# Version 1.0.0 – 2026-08-24 – Stdlib only; Linux-Werkzeuge dokumentiert.
+#
+# Aufruf / Nutzung
+# ----------------
+# python3 -m pip install -r requirements.txt
+#
+# Empfohlen (Linux):
+#   python3 -m venv .venv
+#   source .venv/bin/activate
+#   python -m pip install -r requirements.txt
+#
+# Empfohlen (Windows, nur Tests/GUI-Vorschau):
+#   python -m venv .venv
+#   .venv\Scripts\activate
+#   python -m pip install -r requirements.txt

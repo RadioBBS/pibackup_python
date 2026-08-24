@@ -1,0 +1,22 @@
+# pibackup_python – optionale Bereinigung im Root-Image.
+#
+# Projekt:     pibackup_python
+# Modul:       share/exclude/default.exclude
+# Version:     1.0.0
+# Stand:       2026-08-24
+# Abhaengig:   Debian-Pakete e2fsprogs, util-linux, zstd, mount; Python-Standardbibliothek (Python >= 3.10)
+# Bezug:       requirements.txt (leer – Stdlib only; Linux-Werkzeuge siehe Datei)
+# Lizenz:      MIT
+# Upstream:    https://github.com/RaspberryFpc/pibackup (RaspberryFpc)
+# Erstellt mit: Cursor Grok 4.6
+# Autor:       (FFHB) / RadioBBS
+#
+# Kommandos: file | fileintree | allintree | dir
+# Pfade relativ zum gemounteten Image-Root, ohne "..".
+
+allintree = /var/cache/apt/archives
+allintree = /var/tmp
+allintree = /tmp
+allintree = /var/log
+file = /var/swap
+file = /var/lib/systemd/random-seed

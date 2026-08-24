@@ -1,0 +1,17 @@
+# pibackup_python – SSH-Spuren im Image entfernen.
+#
+# Projekt:     pibackup_python
+# Modul:       share/exclude/ssh-cleanup.exclude
+# Version:     1.0.0
+# Stand:       2026-08-24
+# Abhaengig:   Debian-Pakete e2fsprogs, util-linux, zstd, mount; Python-Standardbibliothek (Python >= 3.10)
+# Bezug:       requirements.txt (leer – Stdlib only; Linux-Werkzeuge siehe Datei)
+# Lizenz:      MIT
+# Upstream:    https://github.com/RaspberryFpc/pibackup (RaspberryFpc)
+# Erstellt mit: Cursor Grok 4.6
+# Autor:       (FFHB) / RadioBBS
+
+file = /etc/systemd/system/multi-user.target.wants/ssh.service
+fileintree = /etc/ssh/ssh_host_*
+file = /root/.ssh/known_hosts
+fileintree = /home/§USER/.ssh/known_hosts
