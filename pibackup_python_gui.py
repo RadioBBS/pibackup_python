@@ -33,6 +33,8 @@ Aufruf / Nutzung
 
 from __future__ import annotations
 
+import platform
+
 import argparse
 import json
 import os
@@ -588,6 +590,77 @@ def serve_until_interrupt(httpd: ThreadingHTTPServer, logger: Logger | None) -> 
         httpd.shutdown()
 
 
+def _ausgabe_ist_terminal() -> bool:
+    """Meldet, ob stdout ein Terminal ist.
+
+    Rückgabewert:
+        True bei einem Terminal.
+
+    Fehlerfälle:
+        Eine fehlende isatty-Methode gilt als kein Terminal.
+
+    Beispiel:
+        _ausgabe_ist_terminal()
+    """
+    try:
+        return bool(sys.stdout.isatty())
+    except (AttributeError, ValueError):
+        return False
+
+
+def print_startup_banner() -> None:
+    """Gibt Kurzname, Zweck und Version vor dem Fachlauf aus.
+
+    Rückgabewert:
+        None
+
+    Fehlerfälle:
+        Keine.
+
+    Beispiel:
+        print_startup_banner()
+    """
+    if sys.platform == "win32":
+        os.system("")
+    name = meta.PROJEKT
+    zweck = meta.BESCHREIBUNG
+    version = meta.VERSION
+    stand = meta.STAND
+    innen = f"  {name}  "
+    linie = "═" * len(innen)
+    farbe = "\033[96m" if _ausgabe_ist_terminal() else ""
+    aus = "\033[0m" if farbe else ""
+    print(f"{farbe}╔{linie}╗{aus}")
+    print(f"{farbe}║{innen}║{aus}")
+    print(f"{farbe}╚{linie}╝{aus}")
+    print(zweck)
+    print()
+    print(f"Version {version}  |  {stand}")
+    print()
+
+
+def pruefe_plattform() -> None:
+    """Beendet den Fachlauf, wenn das Betriebssystem nicht zugesagt ist.
+
+    Rückgabewert:
+        None auf einem zugesagten System.
+
+    Fehlerfälle:
+        SystemExit 1 auf anderen Systemen.
+
+    Beispiel:
+        pruefe_plattform()
+    """
+    system = platform.system()
+    if system in {"Windows", "Linux"}:
+        return
+    print(
+        "FEHLER: Dieses Programm läuft unter Windows 11 und Linux "
+        f"(erkannt: {system}).",
+        file=sys.stderr,
+    )
+    raise SystemExit(1)
+
 def main(argv: list[str] | None = None) -> int:
     """Einstieg GUI.
 
@@ -611,6 +684,8 @@ def main(argv: list[str] | None = None) -> int:
         if args.ende:
             wait_ende()
         return EXIT_OK
+    print_startup_banner()
+    pruefe_plattform()
     logger = Logger(
         enabled=args.log or bool(args.log_file),
         log_file=Path(args.log_file) if args.log_file else None,

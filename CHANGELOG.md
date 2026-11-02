@@ -23,7 +23,7 @@ Version 1.0.1 – 2026-11-02 – Startausgabe und Python 3.11 nach Styleguide 2.
 
 ### Changed
 
-- Startausgabe: blauer Rahmen mit Kurzname, Zweckzeile, Version und Stand.
+- Startausgabe: hellcyaner Rahmen mit Kurzname, Zweckzeile, Version und Stand.
 - Python-Untergrenze 3.11.
 - Plattformprüfung: Windows 11 und Linux.
 
