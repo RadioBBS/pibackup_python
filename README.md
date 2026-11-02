@@ -5,14 +5,18 @@ pibackup_python – Python-CLI und Browser-GUI fuer Raspberry-Pi-Backup.
 
 Projekt:     pibackup_python
 Modul:       README.md
-Version:     1.0.0
-Stand:       2026-08-24
-Abhaengig:   Debian-Pakete e2fsprogs, util-linux, zstd, mount; Python-Standardbibliothek (Python >= 3.10)
+Version:     1.0.1
+Stand:       2026-11-02
+Abhaengig:   Debian-Pakete e2fsprogs, util-linux, zstd, mount; Python-Standardbibliothek (Python >= 3.11)
 Bezug:       requirements.txt (leer – Stdlib only; Linux-Werkzeuge siehe Datei)
 Lizenz:      MIT
 Upstream:    https://github.com/RaspberryFpc/pibackup (RaspberryFpc)
 Erstellt mit: Cursor Grok 4.6
 Autor:       (FFHB) / RadioBBS
+
+Historie
+--------
+Version 1.0.1 – 2026-11-02 – Startausgabe und Python 3.11 nach Styleguide 2.1.0.
 ```
 
 ## Zweck
@@ -29,7 +33,7 @@ Fachliche Herkunft (kein Datei-Import): https://github.com/RaspberryFpc/pibackup
 
 ## Voraussetzungen
 
-- Linux (Raspberry Pi OS / Debian), Python 3.10 oder neuer
+- Linux (Raspberry Pi OS / Debian), Python 3.11 oder neuer
 - Debian-Pakete, nicht PyPI:
 
 ```bash
@@ -45,6 +49,19 @@ Packen nutzt das System-`zstd`.
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
+python -m pip install -r requirements.txt
+```
+
+
+## Installation
+
+Aufruf ueber python, kein chmod.
+
+Keine Extra-Systempakete.
+
+Abhaengigkeitsdatei (auch ohne Paketzeilen):
+
+```bash
 python -m pip install -r requirements.txt
 ```
 

@@ -4,9 +4,9 @@ pibackup_python – CLI-Engine fuer Backup, Restore und Clone.
 
 Projekt:     pibackup_python
 Modul:       pibackup_python.py
-Version:     1.0.0
-Stand:       2026-08-24
-Abhaengig:   Debian-Pakete e2fsprogs, util-linux, zstd, mount; Python-Standardbibliothek (Python >= 3.10)
+Version:     1.0.1
+Stand:       2026-11-02
+Abhaengig:   Debian-Pakete e2fsprogs, util-linux, zstd, mount; Python-Standardbibliothek (Python >= 3.11)
 Bezug:       requirements.txt (leer – Stdlib only; Linux-Werkzeuge siehe Datei)
 Lizenz:      MIT
 Upstream:    https://github.com/RaspberryFpc/pibackup (RaspberryFpc)
@@ -22,6 +22,7 @@ per pkexec/sudo nur fuer die Schreibaktion.
 Historie
 --------
 Version 1.0.0 – 2026-08-24 – Python-CLI, Defaults Shrink+Pack, Hostname-Datum.
+Version 1.0.1 – 2026-11-02 – Startausgabe und Python 3.11 nach Styleguide 2.1.0.
 
 Aufruf / Nutzung
 ----------------

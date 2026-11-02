@@ -1,11 +1,11 @@
 # Werte muessen mit project_meta.py uebereinstimmen (eine Quelle der Wahrheit).
-# Styleguide 1.7.0 / Software-Standard 1.2.0 – Agent zuerst diese Datei lesen.
+# Styleguide 2.1.0 / Software-Standard 1.6.0 – Agent zuerst diese Datei lesen.
 #
 # Projekt:     pibackup_python
 # Modul:       PROJECT.yaml
-# Version:     1.0.0
-# Stand:       2026-08-24
-# Abhaengig:   Debian-Pakete e2fsprogs, util-linux, zstd, mount; Python-Standardbibliothek (Python >= 3.10)
+# Version:     1.0.1
+# Stand:       2026-11-02
+# Abhaengig:   Debian-Pakete e2fsprogs, util-linux, zstd, mount; Python-Standardbibliothek (Python >= 3.11)
 # Bezug:       requirements.txt (leer – Stdlib only; Linux-Werkzeuge siehe Datei)
 # Lizenz:      MIT
 # Upstream:    https://github.com/RaspberryFpc/pibackup (RaspberryFpc)
@@ -15,14 +15,15 @@
 # Historie
 # --------
 # Version 1.0.0 – 2026-08-24 – Eigenstaendiges Python-Produkt (CLI + Browser-GUI).
+# Version 1.0.1 – 2026-11-02 – Startausgabe und Python 3.11 nach Styleguide 2.1.0.
 
 name: pibackup_python
 description: Python-CLI und Browser-GUI fuer Raspberry-Pi-Backup, Restore und Klonen (Startpartition plus Root, Verkleinern, zstd).
 language: python
-python_min: "3.10"
+python_min: "3.11"
 license: MIT
-version: "1.0.0"
-stand: "2026-08-24"
+version: "1.0.1"
+stand: "2026-11-02"
 author: (FFHB) / RadioBBS
 upstream: https://github.com/RaspberryFpc/pibackup
 scripts:
@@ -37,9 +38,9 @@ repository:
   visibility: public
   default_branch: main
 standards:
-  styleguide: "1.7.0"
+  styleguide: "2.1.0"
   styleguide_file: "%USERPROFILE%\\Documents\\Cursor\\.Security-and-Styleguide\\0-Style‑Guide.txt"
-  software_standard: "1.2.0"
+  software_standard: "1.6.0"
   software_standard_file: "%USERPROFILE%\\Documents\\Cursor\\.Security-and-Styleguide\\MY-SOFTWARE-STANDARD v1.0.0.txt"
 testing:
   framework: unittest

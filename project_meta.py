@@ -3,9 +3,9 @@ pibackup_python – Gemeinsame Projektmetadaten (eine Quelle).
 
 Projekt:     pibackup_python
 Modul:       project_meta.py
-Version:     1.0.0
-Stand:       2026-08-24
-Abhaengig:   Debian-Pakete e2fsprogs, util-linux, zstd, mount; Python-Standardbibliothek (Python >= 3.10)
+Version:     1.0.1
+Stand:       2026-11-02
+Abhaengig:   Debian-Pakete e2fsprogs, util-linux, zstd, mount; Python-Standardbibliothek (Python >= 3.11)
 Bezug:       requirements.txt (leer – Stdlib only; Linux-Werkzeuge siehe Datei)
 Lizenz:      MIT
 Upstream:    https://github.com/RaspberryFpc/pibackup (RaspberryFpc)
@@ -20,6 +20,7 @@ Werte nicht in den aufrufenden Dateien verdoppeln.
 Historie
 --------
 Version 1.0.0 – 2026-08-24 – Python-Engine und Browser-GUI, Metadatenquelle.
+Version 1.0.1 – 2026-11-02 – Startausgabe und Python 3.11 nach Styleguide 2.1.0.
 
 Aufruf / Nutzung
 ----------------
@@ -31,12 +32,12 @@ Wird importiert, nicht als Programm gestartet:
 from __future__ import annotations
 
 PROJEKT = "pibackup_python"
-VERSION = "1.0.0"
-STAND = "2026-08-24"
+VERSION = "1.0.1"
+STAND = "2026-11-02"
 LIZENZ = "MIT"
 UPSTREAM = "https://github.com/RaspberryFpc/pibackup (RaspberryFpc)"
 AUTOR = "(FFHB) / RadioBBS"
-PYTHON_MIN = "3.10"
+PYTHON_MIN = "3.11"
 ERSTELLT_MIT = "Cursor Grok 4.6"
 
 BESCHREIBUNG = (
@@ -46,7 +47,7 @@ BESCHREIBUNG = (
 
 ABHAENGIG = (
     "Debian-Pakete e2fsprogs, util-linux, zstd, mount; "
-    "Python-Standardbibliothek (Python >= 3.10)"
+    "Python-Standardbibliothek (Python >= 3.11)"
 )
 BEZUG = "requirements.txt (leer – Stdlib only; Linux-Werkzeuge siehe Datei)"
 

@@ -5,14 +5,18 @@ pibackup_python – Trennung Engine (root) und Browser-GUI (User).
 
 Projekt:     pibackup_python
 Modul:       docs/ARCHITECTURE.md
-Version:     1.0.0
-Stand:       2026-08-24
-Abhaengig:   Linux-Werkzeuge lsblk, e2fsck, resize2fs, losetup, mount, umount, zstd, partprobe; Python-Standardbibliothek (Python >= 3.10)
+Version:     1.0.1
+Stand:       2026-11-02
+Abhaengig:   Linux-Werkzeuge lsblk, e2fsck, resize2fs, losetup, mount, umount, zstd, partprobe; Python-Standardbibliothek (Python >= 3.11)
 Bezug:       requirements.txt (leer – Stdlib only)
 Lizenz:      MIT
 Upstream:    https://github.com/RaspberryFpc/pibackup (RaspberryFpc)
 Erstellt mit: Cursor Grok 4.6
 Autor:       (FFHB) / RadioBBS
+
+Historie
+--------
+Version 1.0.1 – 2026-11-02 – Startausgabe und Python 3.11 nach Styleguide 2.1.0.
 ```
 
 ## Schichten

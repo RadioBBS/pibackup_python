@@ -7,14 +7,18 @@ pibackup – optionale Polkit-Regel fuer pkexec.
 
 Projekt:     pibackup_python
 Modul:       share/polkit/org.pibackup_python.engine.policy
-Version:     1.0.0
-Stand:       2026-08-24
-Abhaengig:   Debian-Pakete e2fsprogs, util-linux, zstd, mount; Python-Standardbibliothek (Python >= 3.10)
+Version:     1.0.1
+Stand:       2026-11-02
+Abhaengig:   Debian-Pakete e2fsprogs, util-linux, zstd, mount; Python-Standardbibliothek (Python >= 3.11)
 Bezug:       requirements.txt (leer – Stdlib only; Linux-Werkzeuge siehe Datei)
 Lizenz:      MIT
 Upstream:    https://github.com/RaspberryFpc/pibackup (RaspberryFpc)
 Erstellt mit: Cursor Grok 4.6
 Autor:       (FFHB) / RadioBBS
+
+Historie
+--------
+Version 1.0.1 – 2026-11-02 – Startausgabe und Python 3.11 nach Styleguide 2.1.0.
 
 Installation (optional, als root):
   cp share/polkit/org.pibackup_python.engine.policy /usr/share/polkit-1/actions/
